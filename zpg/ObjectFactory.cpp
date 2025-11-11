@@ -47,3 +47,8 @@ std::shared_ptr<PointLight> ObjectFactory::createPointLight() {
     auto model = std::make_shared<PointLight>();    
     return model;
 }
+
+std::shared_ptr<FlashLight> ObjectFactory::createFlashLight() {
+    auto model = std::make_shared<FlashLight>();
+    return model;
+}

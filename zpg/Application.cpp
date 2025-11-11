@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "ObjectFactory.h"
 
 static void error_callback(int error, const char* description)
 {
@@ -62,6 +63,13 @@ bool Application::init()
 
 	float aspect = static_cast<float>(width) / static_cast<float>(height);
 	camera->setMode(CameraMode::Third_person, aspect);
+
+	camera->flashlight = ObjectFactory::createFlashLight();
+	camera->flashlight->setInnerCutoff(15.0f);
+	camera->flashlight->setOuterCutoff(20.0f);
+	camera->flashlight->intensity = 1.5f;
+	camera->flashlight->color = glm::vec3(1.0f, 1.0f, 0.2f);
+	camera->syncFlashlight();
 
 	return true;
 }

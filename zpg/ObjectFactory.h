@@ -9,6 +9,7 @@
 #include "Ground.h"
 #include "Light.h"
 #include "PointLight.h"
+#include "FlashLight.h"
 
 class ObjectFactory {
 public:
@@ -21,4 +22,5 @@ public:
 	static std::shared_ptr<DrawableObject> createSuziSmooth(const std::shared_ptr<ShaderProgram>& shader);
 
 	static std::shared_ptr<PointLight> createPointLight();
+	static std::shared_ptr<FlashLight> createFlashLight();
 };

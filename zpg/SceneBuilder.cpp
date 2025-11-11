@@ -79,10 +79,12 @@ std::shared_ptr<Scene> SceneBuilder::createComplexScene(const std::shared_ptr<Sh
 	auto light = ObjectFactory::createPointLight();
 	light->position = glm::vec3(20.f, 40.f, 15.f);
 	light->color = glm::vec3(0.5f);
-	light->intensity = 1.0f;
+	light->intensity = 0.5f;
 	scene->addLight(light);
 
-	glm::vec4 skyColor = { 0.5f, 0.7f, 1.0f, 1.0f };
+	//glm::vec4 skyColor = { 0.5f, 0.7f, 1.0f, 1.0f };
+	glm::vec4 skyColor = { 0.05f, 0.07f, 0.1f, 1.0f }; //darker for flashlight testing
+
 	float wallHeight = 20.0f;
 	float wallDistance = 50.0f;
 
@@ -160,32 +162,32 @@ std::shared_ptr<Scene> SceneBuilder::createShaderTestScene(const std::shared_ptr
 	auto scene = std::make_shared<Scene>();
 	auto red = glm::vec4(1, 0, 0, 1);
 
-	auto light = ObjectFactory::createPointLight();
-	light->position = glm::vec3(-3.f, 0.f, 5.f);
-	light->color = glm::vec3(1.f);
-	light->intensity = 2.f;
-	light->linear = 0.09;
-	light->quadratic = 0.032;
+	//auto light = ObjectFactory::createPointLight();
+	//light->position = glm::vec3(-3.f, 0.f, 5.f);
+	//light->color = glm::vec3(1.f);
+	//light->intensity = 2.f;
+	//light->linear = 0.09;
+	//light->quadratic = 0.032;
 
-	scene->addLight(light);
+	//scene->addLight(light);
 
-	auto light2 = ObjectFactory::createPointLight();
-	light2->position = glm::vec3(12.f, 0.f, 5.f);
-	light2->color = glm::vec3(1.f);
-	light2->intensity = 2.f;
-	light2->linear = 0.09;
-	light2->quadratic = 0.032;
+	//auto light2 = ObjectFactory::createPointLight();
+	//light2->position = glm::vec3(12.f, 0.f, 5.f);
+	//light2->color = glm::vec3(1.f);
+	//light2->intensity = 2.f;
+	//light2->linear = 0.09;
+	//light2->quadratic = 0.032;
 
-	scene->addLight(light2);
+	//scene->addLight(light2);
 
-	auto light3 = ObjectFactory::createPointLight();
-	light3->position = glm::vec3(-3.f, 0.f, -5.f);
-	light3->color = glm::vec3(1.f);
-	light3->intensity = 2.f;
-	light3->linear = 0.09;
-	light3->quadratic = 0.032;
+	//auto light3 = ObjectFactory::createPointLight();
+	//light3->position = glm::vec3(-3.f, 0.f, -5.f);
+	//light3->color = glm::vec3(1.f);
+	//light3->intensity = 2.f;
+	//light3->linear = 0.09;
+	//light3->quadratic = 0.032;
 
-	scene->addLight(light3);
+	//scene->addLight(light3);
 
 	auto suziConstant = ObjectFactory::createSuziSmooth(constantShader);
 	suziConstant->setColor(red);

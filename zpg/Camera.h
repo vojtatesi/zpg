@@ -4,6 +4,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "IResizeObserver.h"
+#include "FlashLight.h"
 
 enum class CameraMode {
 	Third_person,
@@ -13,6 +14,8 @@ enum class CameraMode {
 
 class Camera : public IResizeObserver {
 public:
+	std::shared_ptr<FlashLight> flashlight;
+
 	Camera(
 		glm::vec3 eye = glm::vec3(0.0f, 2.0f, 15.0f),
 		glm::vec3 target = glm::vec3(0.0f, 0.0f, -1.0f),
@@ -20,11 +23,19 @@ public:
 		CameraMode mode = CameraMode::Third_person
 	)
 		: eye(eye), target(target), up(up), projection(1.0f), mode(mode)
-	{				
+	{
 	}
 
-	void setPosition(const glm::vec3& newEye) { eye = newEye; }
-	void setTarget(const glm::vec3& newTarget) { target = newTarget; }
+	void setPosition(const glm::vec3& newEye) {
+		eye = newEye;
+		syncFlashlight();
+	}
+
+	void setTarget(const glm::vec3& newTarget)
+	{
+		target = newTarget;
+		syncFlashlight();
+	}
 	void setUp(const glm::vec3& newUp) { up = newUp; }
 
 	const glm::vec3& getPosition() const { return eye; }
@@ -32,10 +43,21 @@ public:
 	const glm::vec3& getUp() const { return up; }
 	const glm::mat4& getProjection() const { return projection; }
 
-	void moveForward(float amount) { eye += glm::normalize(target) * amount; }
-	void moveBackward(float amount) { eye -= glm::normalize(target) * amount; }
-	void moveLeft(float amount) { eye -= glm::normalize(glm::cross(target, up)) * amount; }
-	void moveRight(float amount) { eye += glm::normalize(glm::cross(target, up)) * amount; }
+	void moveForward(float amount) {
+		setPosition(eye + glm::normalize(target) * amount);
+	}
+
+	void moveBackward(float amount) {
+		setPosition(eye - glm::normalize(target) * amount);
+	}
+
+	void moveLeft(float amount) {
+		setPosition(eye - glm::normalize(glm::cross(target, up)) * amount);
+	}
+
+	void moveRight(float amount) {
+		setPosition(eye + glm::normalize(glm::cross(target, up)) * amount);
+	}
 
 	glm::mat4 getViewMatrix() const;
 
@@ -55,9 +77,16 @@ public:
 		case CameraMode::First_person:
 			projection = glm::perspective(glm::radians(90.0f), aspectRatio, 0.1f, 100.0f);
 			break;
-		case CameraMode::Fish_eye:			
+		case CameraMode::Fish_eye:
 			projection = glm::perspective(glm::radians(130.0f), aspectRatio, 0.1f, 100.0f);
 			break;
+		}
+	}
+
+	void syncFlashlight() {
+		if (flashlight) {
+			flashlight->setPosition(eye);
+			flashlight->setDirection(glm::normalize(target));
 		}
 	}
 
