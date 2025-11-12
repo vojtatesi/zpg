@@ -18,6 +18,11 @@ struct Light {
     float constant;
     float linear;
     float quadratic;
+    int type; // 0 = Point, 1 = Flash
+
+    vec3 direction;
+    float innerCutoff;
+    float outerCutoff;
 };
 
 uniform Light lights[MAX_LIGHTS];
@@ -48,6 +53,21 @@ void main() {
 
         vec3 diffuse  = diff * lights[i].color * uObjectColor.rgb;
         vec3 specular = uSpecularStrength * spec * lights[i].color;
+
+                //Flashlight only
+        if (lights[i].type == 1) { 
+            float dotLF = dot(normalize(-L), normalize(lights[i].direction));
+
+            float alpha = lights[i].outerCutoff;
+            float beta  = lights[i].innerCutoff;
+
+            float intensity = (dotLF - alpha) / (beta - alpha);
+            intensity = clamp(intensity, 0.0, 1.0);
+
+            diffuse  *= intensity;
+            specular *= intensity;
+        }
+        //End of flash light part
 
         totalDiffuse += diffuse * attenuation;
         totalSpecular += specular * attenuation;

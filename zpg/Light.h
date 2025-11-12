@@ -4,6 +4,12 @@
 #include <string>
 
 class ShaderProgram;
+
+enum class LightType {
+    Point_Light,
+    Flash_Light,
+};
+
 class Light
 {
 public:

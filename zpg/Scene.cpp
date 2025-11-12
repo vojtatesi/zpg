@@ -9,8 +9,12 @@ void Scene::drawObjectRecursive(const std::shared_ptr<DrawableObject>& obj, cons
 	auto shader = obj->getShader();
 	shader->use();
 
-	if (lights.size() >= 1)
-		shader->applyLights(lights);
+	std::vector<std::shared_ptr<Light>> activeLights = lights;
+	if (camera->flashlight)
+		activeLights.push_back(camera->flashlight);
+
+	if (activeLights.size() >= 1)
+		shader->applyLights(activeLights);
 
 	shader->applyUniforms(camera, obj);
 

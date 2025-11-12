@@ -47,4 +47,9 @@ void InputController::update(float deltaTime) {
 	if (input.isKeyReleased(GLFW_KEY_9)) {
 		camera->setMode(CameraMode::Fish_eye, aspect);		
 	}
+
+	if (input.isKeyReleased(GLFW_KEY_F)) {
+		if (camera->flashlight)
+			camera->flashlight->toggle();
+	}
 }
