@@ -12,8 +12,7 @@ public:
     std::string getFragmentPath() override { return "BlinnShader.frag"; }
     std::string getVertexPath()   override { return "BlinnShader.vert"; }
 
-private:
-    glm::mat4  projection;
+private:    
     glm::vec3  ambientColor;
     float      shininess;
     float      specularStrength;

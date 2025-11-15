@@ -1,5 +1,7 @@
 #include "Application.h"
 #include "ObjectFactory.h"
+#include <filesystem>
+#include <iostream>
 
 static void error_callback(int error, const char* description)
 {
@@ -23,13 +25,16 @@ Application::~Application()
 
 bool Application::init()
 {
+	//std::cout << "Current working directory: "
+	//	<< std::filesystem::current_path() << std::endl;
+
 	glfwSetErrorCallback(error_callback);
 	if (!glfwInit()) {
 		fprintf(stderr, "ERROR: could not start GLFW3\n");
 		exit(EXIT_FAILURE);
 	}
 
-	window = glfwCreateWindow(1200, 1200, "ZPG", NULL, NULL);
+	window = glfwCreateWindow(1200, 800, "ZPG", NULL, NULL);
 	if (!window) {
 		glfwTerminate();
 		exit(EXIT_FAILURE);
@@ -57,12 +62,11 @@ bool Application::init()
 	int width, height;
 	glfwGetFramebufferSize(window, &width, &height);
 	glViewport(0, 0, width, height);
+	float aspect = static_cast<float>(width) / static_cast<float>(height);
 
 	camera = std::make_shared<Camera>();
-	addObserver(camera);
-
-	float aspect = static_cast<float>(width) / static_cast<float>(height);
-	camera->setMode(CameraMode::Third_person, aspect);
+	camera->setAspect(aspect);	
+	camera->setMode(Camera::CameraMode::Third_person);
 
 	camera->flashlight = ObjectFactory::createFlashLight();
 	camera->flashlight->setInnerCutoff(15.0f);
@@ -70,6 +74,8 @@ bool Application::init()
 	camera->flashlight->intensity = 1.5f;
 	camera->flashlight->color = glm::vec3(1.0f, 1.0f, 0.2f);
 	camera->syncFlashlight();
+
+	addObserver(camera);
 
 	return true;
 }
@@ -90,7 +96,7 @@ void Application::initShaders()
 	blinnShader->compileAndLink();
 }
 
-void Application::initModels()
+void Application::initScenes()
 {
 	auto& sm = SceneManager::getInstance();
 
@@ -99,6 +105,7 @@ void Application::initModels()
 	sm.addScene(SceneBuilder::createSolarSystemScene(phongShader, constantShader));
 	sm.addScene(SceneBuilder::createComplexScene(phongShader, constantShader));
 	sm.addScene(SceneBuilder::createShaderTestScene(phongShader, constantShader, lambertShader, blinnShader));
+	sm.addScene(SceneBuilder::createFormulaScene(phongShader));
 }
 
 
@@ -111,11 +118,8 @@ void Application::run()
 	glEnable(GL_DEPTH_TEST);
 	while (!glfwWindowShouldClose(window))
 	{
+		auto scene = sceneManager.getActiveScene();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		int width, height;
-		glfwGetFramebufferSize(window, &width, &height);
-		float aspect = static_cast<float>(width) / static_cast<float>(height);
 
 		inputManager.update(window);
 
@@ -124,16 +128,7 @@ void Application::run()
 		float deltaTime = static_cast<float>(currentTime - lastTime);
 		lastTime = currentTime;
 
-		inputController->update(deltaTime);
-
-		for (int key = GLFW_KEY_1; key <= GLFW_KEY_5; ++key) {
-			if (glfwGetKey(window, key) == GLFW_PRESS) {
-				int sceneIndex = key - GLFW_KEY_1;
-				sceneManager.setActiveScene(sceneIndex);
-			}
-		}
-
-		auto scene = sceneManager.getActiveScene();
+		inputController->update(deltaTime);		
 
 		if (scene)
 			scene->draw(camera);

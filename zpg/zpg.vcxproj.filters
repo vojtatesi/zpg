@@ -153,7 +153,16 @@
     <ClCompile Include="Suzi_smooth.cpp">
       <Filter>Source Files\Models</Filter>
     </ClCompile>
+    <ClCompile Include="tiny_obj_loader.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="FlashLight.cpp">
+      <Filter>Source Files\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="OBJModel.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_image.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -261,7 +270,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FlashLight.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="OBJModel.h">
+      <Filter>Header Files\Models</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

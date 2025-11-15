@@ -13,4 +13,5 @@ public:
 	static std::shared_ptr<Scene> createComplexScene(const std::shared_ptr<ShaderProgram>& phongShader, const std::shared_ptr<ShaderProgram>& constantShader);
 	static std::shared_ptr<Scene> createShaderTestScene(const std::shared_ptr<ShaderProgram>& phongShader, const std::shared_ptr<ShaderProgram>& constantShader,
 		const std::shared_ptr<ShaderProgram>& lambertShader, const std::shared_ptr<ShaderProgram>& blinnShader);
+	static std::shared_ptr<Scene> createFormulaScene(const std::shared_ptr<ShaderProgram>& phongShader);
 };

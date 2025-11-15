@@ -212,3 +212,23 @@ std::shared_ptr<Scene> SceneBuilder::createShaderTestScene(const std::shared_ptr
 
 	return scene;
 }
+
+std::shared_ptr<Scene> SceneBuilder::createFormulaScene(const std::shared_ptr<ShaderProgram>& phongShader) {
+	auto scene = std::make_shared<Scene>();
+
+	auto light = ObjectFactory::createPointLight();
+	light->position = glm::vec3(0.f, 20.f, 0.f);
+	light->color = glm::vec3(1.f);
+	light->intensity = 1.f;
+	//light->linear = 0.9;
+	//light->quadratic = 0.32;
+
+	scene->addLight(light);
+
+	auto formula = ObjectFactory::createOBJ(ObjectFactory::ModelType::Formula, phongShader);
+	formula->getTransformation()->scale(0.5)->translate(0, 0, -10);
+
+	scene->addObject(formula);
+
+	return scene;
+}

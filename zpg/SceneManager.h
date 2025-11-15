@@ -10,6 +10,7 @@ public:
     SceneManager& operator=(const SceneManager&) = delete;
     void addScene(const std::shared_ptr<Scene>& scene);
     void setActiveScene(int index);
+    //void initScenes();
     std::shared_ptr<Scene> getActiveScene() const;
 
     ~SceneManager();
