@@ -102,7 +102,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>..\Libraries\glfw-3.4.bin.WIN64\include;..\Libraries\glew-2.1.0\include;..\Libraries\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Libraries\glfw-3.4.bin.WIN64\include;..\Libraries\glew-2.1.0\include;..\Libraries\glm;..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,6 +144,7 @@
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
+    <ClCompile Include="OBJModel.cpp" />
     <ClCompile Include="PhongShader.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Rotation.cpp" />
@@ -154,7 +156,9 @@
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Square.cpp" />
+    <ClCompile Include="stb_image.c" />
     <ClCompile Include="Suzi_smooth.cpp" />
+    <ClCompile Include="tiny_obj_loader.cc" />
     <ClCompile Include="Transformation.cpp" />
     <ClCompile Include="Translation.cpp" />
     <ClCompile Include="Tree.cpp" />
@@ -181,6 +185,7 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ObjectFactory.h" />
+    <ClInclude Include="OBJModel.h" />
     <ClInclude Include="PhongShader.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Rotation.h" />

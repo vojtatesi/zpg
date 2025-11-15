@@ -27,7 +27,7 @@ public:
     bool init();
     void run();
     void initShaders();
-    void initModels();
+    void initScenes();
 
     std::shared_ptr<Camera> camera;
 

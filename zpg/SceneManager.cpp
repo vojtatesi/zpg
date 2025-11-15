@@ -25,3 +25,4 @@ std::shared_ptr<Scene> SceneManager::getActiveScene() const {
 	if (scenes.empty()) return nullptr;
 	return scenes[currentScene];
 }
+

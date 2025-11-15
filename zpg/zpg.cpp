@@ -27,7 +27,7 @@ int main(void)
 	auto& app = Application::getInstance();
 	app.init();
 	app.initShaders();
-	app.initModels();
+	app.initScenes();
 	app.run();
 
 }

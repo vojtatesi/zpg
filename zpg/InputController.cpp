@@ -8,6 +8,7 @@ InputController::InputController(std::shared_ptr<Camera> cam)
 
 void InputController::update(float deltaTime) {
 	auto& input = InputManager::getInstance();
+	auto& sceneManager = SceneManager::getInstance();
 
 	float move = moveSpeed * deltaTime;
 	if (input.isKeyPressed(GLFW_KEY_W)) camera->moveForward(move);
@@ -38,14 +39,21 @@ void InputController::update(float deltaTime) {
 	glfwGetFramebufferSize(glfwGetCurrentContext(), &width, &height);
 	float aspect = static_cast<float>(width) / static_cast<float>(height);
 
+	for (int key = GLFW_KEY_1; key <= GLFW_KEY_6; ++key) {
+		if (input.isKeyPressed(key)) {
+			int sceneIndex = key - GLFW_KEY_1;
+			sceneManager.setActiveScene(sceneIndex);
+		}
+	}
+
 	if (input.isKeyReleased(GLFW_KEY_7)) {
-		camera->setMode(CameraMode::First_person, aspect);		
+		camera->setMode(Camera::CameraMode::First_person);		
 	}
 	if (input.isKeyReleased(GLFW_KEY_8)) {
-		camera->setMode(CameraMode::Third_person, aspect);		
+		camera->setMode(Camera::CameraMode::Third_person);
 	}
 	if (input.isKeyReleased(GLFW_KEY_9)) {
-		camera->setMode(CameraMode::Fish_eye, aspect);		
+		camera->setMode(Camera::CameraMode::Fish_eye);
 	}
 
 	if (input.isKeyReleased(GLFW_KEY_F)) {

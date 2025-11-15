@@ -6,23 +6,24 @@
 #include "IResizeObserver.h"
 #include "FlashLight.h"
 
-enum class CameraMode {
-	Third_person,
-	First_person,
-	Fish_eye
-};
-
 class Camera : public IResizeObserver {
 public:
 	std::shared_ptr<FlashLight> flashlight;
+
+	enum class CameraMode {
+		Third_person,
+		First_person,
+		Fish_eye
+	};
 
 	Camera(
 		glm::vec3 eye = glm::vec3(0.0f, 2.0f, 15.0f),
 		glm::vec3 target = glm::vec3(0.0f, 0.0f, -1.0f),
 		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f),
-		CameraMode mode = CameraMode::Third_person
+		CameraMode mode = CameraMode::Third_person,
+		float aspect = 1.0
 	)
-		: eye(eye), target(target), up(up), projection(1.0f), mode(mode)
+		: eye(eye), target(target), up(up), projection(1.0f), mode(mode), aspect(aspect)
 	{
 	}
 
@@ -31,13 +32,9 @@ public:
 		syncFlashlight();
 	}
 
-	void setTarget(const glm::vec3& newTarget)
-	{
-		target = newTarget;
-		syncFlashlight();
-	}
+	void setAspect(float aspect) { aspect = aspect; }
+	void setTarget(const glm::vec3& newTarget);
 	void setUp(const glm::vec3& newUp) { up = newUp; }
-
 	const glm::vec3& getPosition() const { return eye; }
 	const glm::vec3& getTarget() const { return target; }
 	const glm::vec3& getUp() const { return up; }
@@ -61,34 +58,11 @@ public:
 
 	glm::mat4 getViewMatrix() const;
 
-	void onResize(int width, int height) override {
-		if (height <= 0) return;
-		float aspect = static_cast<float>(width) / static_cast<float>(height);
-		setMode(mode, aspect);
-	}
+	void onResize(int width, int height) override;
 
-	void setMode(CameraMode newMode, float aspectRatio = 1.0f) {
-		mode = newMode;
-
-		switch (mode) {
-		case CameraMode::Third_person:
-			projection = glm::perspective(glm::radians(45.0f), aspectRatio, 0.1f, 100.0f);
-			break;
-		case CameraMode::First_person:
-			projection = glm::perspective(glm::radians(90.0f), aspectRatio, 0.1f, 100.0f);
-			break;
-		case CameraMode::Fish_eye:
-			projection = glm::perspective(glm::radians(130.0f), aspectRatio, 0.1f, 100.0f);
-			break;
-		}
-	}
-
-	void syncFlashlight() {
-		if (flashlight) {
-			flashlight->setPosition(eye);
-			flashlight->setDirection(glm::normalize(target));
-		}
-	}
+	void setMode(CameraMode newMode);
+	void applyMode();
+	void syncFlashlight();
 
 private:
 	glm::vec3 eye;
@@ -96,4 +70,5 @@ private:
 	glm::vec3 up;
 	glm::mat4 projection;
 	CameraMode mode;
+	float aspect;
 };
