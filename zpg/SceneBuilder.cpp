@@ -1,6 +1,9 @@
 #include "SceneBuilder.h"
 #include "ObjectFactory.h"
+#include "TextureManager.h"
 #include "ContinuousRotation.h"
+#include "CubeTexture.h"
+#include "Skybox.h"
 
 std::shared_ptr<Scene> SceneBuilder::createSolarSystemScene(const std::shared_ptr<ShaderProgram>& phongShader,
 	const std::shared_ptr<ShaderProgram>& constantShader)
@@ -72,51 +75,60 @@ std::shared_ptr<Scene> SceneBuilder::createSpheresScene(const std::shared_ptr<Sh
 	return scene;
 }
 
-std::shared_ptr<Scene> SceneBuilder::createComplexScene(const std::shared_ptr<ShaderProgram>& phongShader, const std::shared_ptr<ShaderProgram>& constantShader)
+std::shared_ptr<Scene> SceneBuilder::createComplexScene(const std::shared_ptr<ShaderProgram>& phongShader, const std::shared_ptr<ShaderProgram>& constantShader, const std::shared_ptr<ShaderProgram>& skyboxShader)
 {
 	auto scene = std::make_shared<Scene>();
 
 	auto light = ObjectFactory::createPointLight();
 	light->position = glm::vec3(20.f, 40.f, 15.f);
-	light->color = glm::vec3(0.5f);
-	light->intensity = 0.5f;
+	light->color = glm::vec3(1.f);
+	light->intensity = 0.8f;
 	scene->addLight(light);
 
-	//glm::vec4 skyColor = { 0.5f, 0.7f, 1.0f, 1.0f };
-	glm::vec4 skyColor = { 0.05f, 0.07f, 0.1f, 1.0f }; //darker for flashlight testing
+	auto cubeMap = std::make_shared<CubeTexture>();
+	cubeMap->load();
 
-	float wallHeight = 20.0f;
-	float wallDistance = 50.0f;
+	auto skybox = std::make_shared<Skybox>(skyboxShader, cubeMap);
+	scene->setSkybox(skybox);
 
-	auto frontWall = ObjectFactory::createSquare(constantShader);
-	frontWall->setColor(skyColor);
-	frontWall->getTransformation()->scale(100.0f)->translate(0.0f, wallDistance, wallDistance);
-	scene->addObject(frontWall);
-
-	auto backWall = ObjectFactory::createSquare(constantShader);
-	backWall->setColor(skyColor);
-	backWall->getTransformation()->scale(100.0f)->rotate(0.0f, 180.0f, 0.0f)->translate(0.0f, wallDistance, -wallDistance);
-	scene->addObject(backWall);
-
-	auto leftWall = ObjectFactory::createSquare(constantShader);
-	leftWall->setColor(skyColor);
-	leftWall->getTransformation()->scale(100.0f)->rotate(0.0f, 90.0f, 0.0f)->translate(-wallDistance, wallDistance, 0.0f);
-	scene->addObject(leftWall);
-
-	auto rightWall = ObjectFactory::createSquare(constantShader);
-	rightWall->setColor(skyColor);
-	rightWall->getTransformation()->scale(100.0f)->rotate(0.0f, -90.0f, 0.0f)->translate(wallDistance, wallDistance, 0.0f);
-	scene->addObject(rightWall);
-
-	auto sky = ObjectFactory::createGround(constantShader);
-	sky->setColor(skyColor);
-	sky->getTransformation()->scale(100.0f)->translate(0.0f, wallDistance, 0.f);
-	scene->addObject(sky);
-
-	auto ground = ObjectFactory::createGround(phongShader);
+	auto ground = ObjectFactory::createGround(constantShader);
 	ground->setColor({ 0.3f, 0.7f, 0.3f, 1.0f });
 	ground->getTransformation()->scale(100.0f);
+
+	auto grassMat = std::make_shared<Material>();
+	grassMat->diffuse = TextureManager::get(TextureManager::ModelType::SkyboxGrass);
+	grassMat->color = glm::vec4(1.0f);
+	grassMat->texScale = 100;
+	ground->setMaterial(grassMat);
+
 	scene->addObject(ground);
+
+	auto shrek = ObjectFactory::createOBJ(ObjectFactory::ModelType::Shrek, constantShader);
+	auto toilet = ObjectFactory::createOBJ(ObjectFactory::ModelType::Toilet, constantShader);
+	auto fiona = ObjectFactory::createOBJ(ObjectFactory::ModelType::Fiona, constantShader);
+
+	auto shrekMat = std::make_shared<Material>();
+	shrekMat->diffuse = TextureManager::get(TextureManager::ModelType::Shrek);
+	shrekMat->color = glm::vec4(1.0f);
+	shrek->setMaterial(shrekMat);
+
+	auto fionaMat = std::make_shared<Material>();
+	fionaMat->diffuse = TextureManager::get(TextureManager::ModelType::Fiona);
+	fionaMat->color = glm::vec4(1.0f);
+	fiona->setMaterial(fionaMat);
+
+	auto toiletMat = std::make_shared<Material>();
+	toiletMat->diffuse = TextureManager::get(TextureManager::ModelType::Toilet);
+	toiletMat->color = glm::vec4(1.0f);
+	toilet->setMaterial(toiletMat);
+
+	shrek->getTransformation()->translate(-2.0f, 0.0f, 5.0f)->scale(1.f);
+	fiona->getTransformation()->translate(2.0f, 0.0f, 5.0f)->scale(1.f);
+	toilet->getTransformation()->translate(0.0f, 0.0f, 5.0f)->scale(1.f);
+
+	scene->addObject(shrek);
+	scene->addObject(fiona);
+	scene->addObject(toilet);
 
 	/*for (int i = 0; i < 50; ++i) {
 		auto sphere = ObjectFactory::createSphere(phongShader);

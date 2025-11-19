@@ -10,6 +10,7 @@ public:
     void init();    
     void destroy();
     void draw() const;
+    GLuint getId() const;
 
     virtual glm::vec3 getPivot() const { return glm::vec3(0.0f); }
 

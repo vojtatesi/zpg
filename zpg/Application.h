@@ -15,6 +15,7 @@
 #include "InputManager.h"
 #include "InputController.h"
 #include "IResizeSubject.h"
+#include "SkyboxShader.h"
 
 class Application : IResizeSubject
 {
@@ -42,6 +43,7 @@ private:
     std::shared_ptr<ShaderProgram> phongShader;
     std::shared_ptr<ShaderProgram> lambertShader;
     std::shared_ptr<ShaderProgram> blinnShader;
+    std::shared_ptr<ShaderProgram> skyboxShader;
 
     std::vector<std::shared_ptr<DrawableObject>> models;
     std::vector<std::shared_ptr<Scene>> scenes;

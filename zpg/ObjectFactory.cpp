@@ -73,7 +73,6 @@ std::shared_ptr<DrawableObject> ObjectFactory::createOBJ(ModelType type, const s
 
 	const std::string& path = it->second;
 
-
 	if (auto cached = modelCache[path].lock()) {
 		return std::make_shared<DrawableObject>(cached, shader);
 	}
