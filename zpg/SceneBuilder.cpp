@@ -98,7 +98,7 @@ std::shared_ptr<Scene> SceneBuilder::createComplexScene(const std::shared_ptr<Sh
 	auto grassMat = std::make_shared<Material>();
 	grassMat->diffuse = TextureManager::get(TextureManager::ModelType::SkyboxGrass);
 	grassMat->color = glm::vec4(1.0f);
-	grassMat->texScale = 100;
+	grassMat->texScale = 10;
 	ground->setMaterial(grassMat);
 
 	scene->addObject(ground);

@@ -2,7 +2,6 @@
 #include <memory>
 #include "Scene.h"
 #include "ShaderProgram.h"
-#include "SkyboxModel.h"
 
 class SceneBuilder
 {
