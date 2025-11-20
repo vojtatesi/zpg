@@ -6,12 +6,12 @@
 
 class InputController {
 public:
-    InputController(std::shared_ptr<Camera> camera);
+	InputController(std::shared_ptr<Camera> camera);
 
-    void update(float deltaTime);
+	void update(float deltaTime);
 
 private:
-    std::shared_ptr<Camera> camera;
-    float moveSpeed = 15.0f;
-    float lookSensitivity = 0.1f;
+	std::shared_ptr<Camera> camera;
+	float moveSpeed = 15.0f;
+	float lookSensitivity = 0.1f;
 };

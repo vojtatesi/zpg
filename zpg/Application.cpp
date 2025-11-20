@@ -61,11 +61,10 @@ bool Application::init()
 
 	int width, height;
 	glfwGetFramebufferSize(window, &width, &height);
-	glViewport(0, 0, width, height);
-	float aspect = static_cast<float>(width) / static_cast<float>(height);
+	glViewport(0, 0, width, height);	
 
 	camera = std::make_shared<Camera>();
-	camera->setAspect(aspect);	
+	camera->setResolution(width, height);	
 	camera->setMode(Camera::CameraMode::Third_person);
 
 	camera->flashlight = ObjectFactory::createFlashLight();
@@ -94,6 +93,9 @@ void Application::initShaders()
 
 	blinnShader = std::make_shared<BlinnShader>();
 	blinnShader->compileAndLink();
+
+	skyboxShader = std::make_shared<SkyboxShader>();
+	skyboxShader->compileAndLink();
 }
 
 void Application::initScenes()
@@ -103,7 +105,7 @@ void Application::initScenes()
 	sm.addScene(SceneBuilder::createTriangleScene(constantShader));
 	sm.addScene(SceneBuilder::createSpheresScene(phongShader));
 	sm.addScene(SceneBuilder::createSolarSystemScene(phongShader, constantShader));
-	sm.addScene(SceneBuilder::createComplexScene(phongShader, constantShader));
+	sm.addScene(SceneBuilder::createComplexScene(phongShader, constantShader, skyboxShader));
 	sm.addScene(SceneBuilder::createShaderTestScene(phongShader, constantShader, lambertShader, blinnShader));
 	sm.addScene(SceneBuilder::createFormulaScene(phongShader));
 }
@@ -128,10 +130,13 @@ void Application::run()
 		float deltaTime = static_cast<float>(currentTime - lastTime);
 		lastTime = currentTime;
 
-		inputController->update(deltaTime);		
+		glEnable(GL_STENCIL_TEST);
+		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
 		if (scene)
 			scene->draw(camera);
+
+		inputController->update(deltaTime);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

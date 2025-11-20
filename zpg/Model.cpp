@@ -2,25 +2,30 @@
 
 void Model::init()
 {
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
 
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, getVertexSize(), getVertices(), GL_STATIC_DRAW);
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, getVertexSize(), getVertices(), GL_STATIC_DRAW);
 
-    setupVertexAttribs();
+	setupVertexAttribs();
 }
 
 void Model::destroy()
 {
-    if (VBO) glDeleteBuffers(1, &VBO);
-    if (VAO) glDeleteVertexArrays(1, &VAO);
-    VBO = VAO = 0;
+	if (VBO) glDeleteBuffers(1, &VBO);
+	if (VAO) glDeleteVertexArrays(1, &VAO);
+	VBO = VAO = 0;
+}
+
+GLuint Model::getId() const
+{
+	return VAO;
 }
 
 void Model::draw() const
 {
-    glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, getVertexCount());
+	glBindVertexArray(VAO);
+	glDrawArrays(GL_TRIANGLES, 0, getVertexCount());
 }

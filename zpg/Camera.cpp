@@ -38,6 +38,12 @@ void Camera::setMode(CameraMode newMode) {
 
 void Camera::onResize(int width, int height) {
 	if (height <= 0) return;
-	aspect = static_cast<float>(width) / static_cast<float>(height);
+	setResolution(width, height);
 	applyMode();
+}
+
+void Camera::setResolution(float width, float height) {
+	aspect = static_cast<float>(width) / static_cast<float>(height);
+	res.height = height;
+	res.width = width;
 }

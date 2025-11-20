@@ -52,6 +52,12 @@
     <Filter Include="Resource Files\Shaders\Fragment">
       <UniqueIdentifier>{e704ee50-aa62-499a-98bd-96807077ab7f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Texture">
+      <UniqueIdentifier>{4dfec0a8-4b8c-40bf-8141-e29cff72eeb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Texture">
+      <UniqueIdentifier>{e816b7b5-fe28-40d3-99a9-4efc7f871d05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="zpg.cpp">
@@ -162,7 +168,22 @@
     <ClCompile Include="OBJModel.cpp">
       <Filter>Source Files\Models</Filter>
     </ClCompile>
-    <ClCompile Include="stb_image.c">
+    <ClCompile Include="CubeTexture.cpp">
+      <Filter>Source Files\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Source Files\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyboxShader.cpp">
+      <Filter>Source Files\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -275,6 +296,30 @@
     <ClInclude Include="OBJModel.h">
       <Filter>Header Files\Models</Filter>
     </ClInclude>
+    <ClInclude Include="SkyboxModel.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Header Files\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Header Files\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeTexture.h">
+      <Filter>Header Files\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyboxShader.h">
+      <Filter>Header Files\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableSkybox.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ConstantShader.frag">
@@ -300,6 +345,12 @@
     </None>
     <None Include="BlinnShader.vert">
       <Filter>Resource Files\Shaders\Vertex</Filter>
+    </None>
+    <None Include="SkyboxShader.vert">
+      <Filter>Resource Files\Shaders\Vertex</Filter>
+    </None>
+    <None Include="SkyboxShader.frag">
+      <Filter>Resource Files\Shaders\Fragment</Filter>
     </None>
   </ItemGroup>
 </Project>

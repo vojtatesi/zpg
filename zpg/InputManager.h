@@ -11,6 +11,7 @@ public:
     bool isKeyPressed(int key) const;
     bool isKeyReleased(int key) const;
     bool isMouseButtonPressed(int button) const;
+    bool isMouseButtonReleased(int button) const;
 
     double getMouseX() const { return mouseX; }
     double getMouseY() const { return mouseY; }
@@ -22,6 +23,7 @@ private:
 
     std::unordered_map<int, bool> keyStates;
     std::unordered_map<int, bool> prevKeyStates;
+    std::unordered_map<int, bool> mouseButtonPrevStates;
     std::unordered_map<int, bool> mouseButtonStates;
 
     double mouseX = 0.0, mouseY = 0.0;

@@ -17,7 +17,8 @@ void Scene::drawObjectRecursive(const std::shared_ptr<DrawableObject>& obj, cons
 		shader->applyLights(activeLights);
 
 	shader->applyUniforms(camera, obj);
-
+	
+	glStencilFunc(GL_ALWAYS, obj->getId(), 0xFF);
 	obj->draw();
 
 	for (const auto& child : obj->getChildren())
@@ -28,6 +29,9 @@ void Scene::drawObjectRecursive(const std::shared_ptr<DrawableObject>& obj, cons
 
 void Scene::draw(const std::shared_ptr<Camera>& camera) const
 {
+	if (skybox)
+		skybox->draw(camera);
+
 	for (const auto& obj : objects)
 		drawObjectRecursive(obj, camera);
 }

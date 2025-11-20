@@ -134,6 +134,7 @@
     <ClCompile Include="CompositeTransformation.cpp" />
     <ClCompile Include="ConstantShader.cpp" />
     <ClCompile Include="ContinuousRotation.cpp" />
+    <ClCompile Include="CubeTexture.cpp" />
     <ClCompile Include="DrawableObject.cpp" />
     <ClCompile Include="FlashLight.cpp" />
     <ClCompile Include="Ground.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="ITransformation.cpp" />
     <ClCompile Include="LambertShader.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Material.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="OBJModel.cpp" />
@@ -154,10 +156,13 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
+    <ClCompile Include="Skybox.cpp" />
+    <ClCompile Include="SkyboxShader.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Square.cpp" />
-    <ClCompile Include="stb_image.c" />
     <ClCompile Include="Suzi_smooth.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="tiny_obj_loader.cc" />
     <ClCompile Include="Transformation.cpp" />
     <ClCompile Include="Translation.cpp" />
@@ -173,7 +178,9 @@
     <ClInclude Include="CompositeTransformation.h" />
     <ClInclude Include="ConstantShader.h" />
     <ClInclude Include="ContinuousRotation.h" />
+    <ClInclude Include="CubeTexture.h" />
     <ClInclude Include="DrawableObject.h" />
+    <ClInclude Include="DrawableSkybox.h" />
     <ClInclude Include="FlashLight.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="InputController.h" />
@@ -183,6 +190,7 @@
     <ClInclude Include="ITransformation.h" />
     <ClInclude Include="LambertShader.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="Material.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="OBJModel.h" />
@@ -195,9 +203,14 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="Skybox.h" />
+    <ClInclude Include="SkyboxModel.h" />
+    <ClInclude Include="SkyboxShader.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="Suzi_smooth.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Transformation.h" />
     <ClInclude Include="Translation.h" />
     <ClInclude Include="Tree.h" />
@@ -212,6 +225,8 @@
     <None Include="LambertShader.vert" />
     <None Include="PhongShader.frag" />
     <None Include="PhongShader.vert" />
+    <None Include="SkyboxShader.frag" />
+    <None Include="SkyboxShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

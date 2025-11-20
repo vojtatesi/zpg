@@ -10,7 +10,15 @@ void DrawableObject::addChildObject(const std::shared_ptr<DrawableObject>& child
 
 void DrawableObject::draw() const
 {
+	if (material)
+		material->bind(*shader);
+
 	model->draw();
+}
+
+GLuint DrawableObject::getId() const
+{
+	return model->getId();
 }
 
 std::shared_ptr<ShaderProgram> DrawableObject::getShader() const {

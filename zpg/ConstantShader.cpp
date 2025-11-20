@@ -10,6 +10,7 @@ void ConstantShader::applyLights(const std::vector<std::shared_ptr<Light>>& ligh
 
 
 void ConstantShader::applyUniforms(const std::shared_ptr<Camera>& camera, const std::shared_ptr<DrawableObject>& model) {
+	setUniform1i("useTexture", 0);
 	setUniformMatrix4fv("uProjection", camera->getProjection());
 	setUniformMatrix4fv("uView", camera->getViewMatrix());
 	setUniformMatrix4fv("uModel", model->getTransformation()->getWorldMatrix());

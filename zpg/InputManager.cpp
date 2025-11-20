@@ -7,6 +7,7 @@ InputManager& InputManager::getInstance() {
 
 void InputManager::update(GLFWwindow* window) {
     prevKeyStates = keyStates;
+    mouseButtonPrevStates = mouseButtonStates;
     
     for (int key = GLFW_KEY_SPACE; key <= GLFW_KEY_LAST; ++key)
         keyStates[key] = glfwGetKey(window, key) == GLFW_PRESS;
@@ -48,4 +49,19 @@ bool InputManager::isKeyReleased(int key) const {
 bool InputManager::isMouseButtonPressed(int button) const {
     auto it = mouseButtonStates.find(button);
     return it != mouseButtonStates.end() && it->second;
+}
+
+bool InputManager::isMouseButtonReleased(int button) const {
+    bool current = false;
+    bool previous = false;
+
+    auto itCurrent = mouseButtonStates.find(button);
+    if (itCurrent != mouseButtonStates.end())
+        current = itCurrent->second;
+
+    auto itPrev = mouseButtonPrevStates.find(button);
+    if (itPrev != mouseButtonPrevStates.end())
+        previous = itPrev->second;
+
+    return !current && previous;
 }
