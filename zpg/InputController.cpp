@@ -73,7 +73,6 @@ void InputController::update(float deltaTime) {
 				glm::vec3 hit = worldNear + t * dir;
 				printf("Ground hit at: (%.2f, %.2f, %.2f)\n", hit.x, hit.y, hit.z);
 
-				// TADY mùžeš sázet stromy / posouvat objekty:
 				// auto& sceneManager = SceneManager::getInstance();
 				// auto scene = sceneManager.getActiveScene();
 				// auto tree = ObjectFactory::createTree(phongShader);

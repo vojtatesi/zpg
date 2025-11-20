@@ -130,13 +130,13 @@ void Application::run()
 		float deltaTime = static_cast<float>(currentTime - lastTime);
 		lastTime = currentTime;
 
-		inputController->update(deltaTime);		
-
 		glEnable(GL_STENCIL_TEST);
 		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 
 		if (scene)
 			scene->draw(camera);
+
+		inputController->update(deltaTime);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
